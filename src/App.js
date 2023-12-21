@@ -1,27 +1,38 @@
-import './App.css';
-import { Typography, Container } from '@mui/joy';
-import { Provider } from 'react-redux';
-import store from './redux/store';
+// App.js
+
+import React, { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
+import Home from './components/Home';
+import Login from './components/Login';
+import CameraDetails from './components/CameraDetails';
+import SignUp from './components/SignUp';
+import Sidebar from './components/Sidebar';
+import { setToken } from './redux/userAuth/authSlice';
 
 function App() {
-  return (
-    <Provider store={store}>
-      <Container className="App">
-        {/* We decided to use Mui material for our frontend framework  */}
-        {/* Its easy to use as demonstrated in this file, just
-      import the components you need to use and wrap the content inside the components
-      just as you would in html or bootstrap components  */}
-        {/* To change the style or adjust the styles you can use
-      eg: sx={{display: "inline-flex", justifyContent:"center"}}  */}
-        {/* Link to the MUI/Joy = "https://mui.com/joy-ui/getting-started/installation/" */}
-        {/* For text, Mui uses Typography which we use in all text h1-h6 and paragraph  */}
+  const dispatch = useDispatch();
 
-        {/* Typography example please refer to the doc for more options */}
-        <Typography level="h1" sx={{ color: 'red' }}>
-          Hello
-        </Typography>
-      </Container>
-    </Provider>
+  useEffect(() => {
+    const token = Cookies.get('token');
+    const username = Cookies.get('username');
+
+    if (token) {
+      dispatch(setToken({ username, token }));
+    }
+  }, [dispatch]);
+
+  return (
+    <div style={{ display: 'flex', width: '100%' }}>
+      <Sidebar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/cameras" element={<CameraDetails />} />
+        <Route path="/sign-up" element={<SignUp />} />
+      </Routes>
+    </div>
   );
 }
 
