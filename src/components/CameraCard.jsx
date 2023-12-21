@@ -6,7 +6,7 @@ import {
 
 const CameraCard = ({ camera }) => {
   const {
-    name, image, price, camera_type,
+    name, image, price, cameraType,
   } = camera;
 
   const cardMediaStyle = {
@@ -17,6 +17,15 @@ const CameraCard = ({ camera }) => {
     relative: 'relative',
     zIndex: 'z-10',
   };
+
+  const renderDetail = (label, value) => (
+    <Typography variant="body2" color="textSecondary" component="p">
+      {label}
+      :
+      {' '}
+      {value}
+    </Typography>
+  );
 
   return (
     <Grid
@@ -43,28 +52,19 @@ const CameraCard = ({ camera }) => {
           </Typography>
           {/* Display other camera details */}
           {renderDetail('Price', `$ ${price}`)}
-          {renderDetail('Type', camera_type)}
+          {renderDetail('Type', cameraType)}
         </CardContent>
       </Card>
     </Grid>
   );
 };
 
-const renderDetail = (label, value) => (
-  <Typography variant="body2" color="textSecondary" component="p">
-    {label}
-    :
-    {' '}
-    {value}
-  </Typography>
-);
-
 CameraCard.propTypes = {
   camera: PropTypes.shape({
     name: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    camera_type: PropTypes.string.isRequired,
+    cameraType: PropTypes.string.isRequired,
   }).isRequired,
 };
 
