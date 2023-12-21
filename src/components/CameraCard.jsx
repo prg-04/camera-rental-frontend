@@ -5,7 +5,9 @@ import {
 } from '@mui/material';
 
 const CameraCard = ({ camera }) => {
-  const { name, image, price, camera_type } = camera;
+  const {
+    name, image, price, camera_type,
+  } = camera;
 
   const cardMediaStyle = {
     objectCover: 'object-cover',
@@ -50,7 +52,9 @@ const CameraCard = ({ camera }) => {
 
 const renderDetail = (label, value) => (
   <Typography variant="body2" color="textSecondary" component="p">
-    {label}:{' '}
+    {label}
+    :
+    {' '}
     {value}
   </Typography>
 );
@@ -65,4 +69,3 @@ CameraCard.propTypes = {
 };
 
 export default CameraCard;
-
