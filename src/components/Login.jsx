@@ -17,35 +17,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleLogin = async () => {
-    try {
-      const response = await axios.post('http://localhost:4000/login', {
-        user: {
-          username,
-          email,
-          password,
-        },
-      });
-
-      if (response.status === 200) {
-        dispatch(setToken({ username, token: response.data.jti }));
-
-        setSuccessMessage('Success! Redirecting to the home page...');
-        setUsername(username);
-        setTimeout(() => {
-          setSuccessMessage('');
-          navigate('/');
-        }, 2000);
-      } else {
-        setErrorMessage(`Sign-in failed with status: ${response.status}`);
-      }
-    } catch (error) {
-      setErrorMessage(`Sign-in failed: ${error.message}`);
-      setTimeout(() => {
-        setErrorMessage('');
-      }, 5000);
-    }
-  };
+  
 
   return (
     <div className="flex flex-col gap-8 justify-center items-center w-full">
