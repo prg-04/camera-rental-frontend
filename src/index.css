@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 body {
   margin: 0;
   font-family:
@@ -29,3 +30,4 @@ code {
     'Courier New',
     monospace;
 }
+
