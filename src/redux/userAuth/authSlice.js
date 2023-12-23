@@ -28,9 +28,8 @@ export const logout = createAsyncThunk(
   'user/logout',
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      // Perform any backend operations if necessary, like invalidating a token
       dispatch(clearToken());
-      return {}; // Return an empty object as the payload indicating a successful logout
+      return {};
       // eslint-disable-next-line no-unreachable
     } catch (error) {
       return rejectWithValue(error.message);

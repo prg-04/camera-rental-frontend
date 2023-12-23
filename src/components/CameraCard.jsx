@@ -1,58 +1,56 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Card, CardContent, CardMedia, Typography, Grid,
-} from '@mui/material';
+  Card, CardContent, Typography, Grid, Button,
+} from '@mui/joy';
+import { CardMedia } from '@mui/material';
+import { Link } from 'react-router-dom';
 
-const CameraCard = ({ camera }) => {
-  const {
-    name, image, price, cameraType,
-  } = camera;
-
-  const cardMediaStyle = {
-    objectCover: 'object-cover',
-    width: '3/5',
-    height: 'full',
-    border: 'border',
-    relative: 'relative',
-    zIndex: 'z-10',
-  };
-
-  const renderDetail = (label, value) => (
-    <Typography variant="body2" color="textSecondary" component="p">
-      {label}
-      :
-      {' '}
-      {value}
-    </Typography>
-  );
+const CameraCard = ({ camera, buttonLabel, onClick }) => {
+  const { camera_images: [{ image } = {}] = [] } = camera;
 
   return (
     <Grid
       item
-      key={name}
+      key={camera.name}
       xs={12}
       md={6}
-      className="w-full border gap-3 relative"
+      className="w-full gap-3 relative"
     >
-      <Card className="h-[36rem]">
+      <Card
+        sx={{ border: 'none', backgroundColor: '#fff' }}
+        className="h-[36rem]"
+      >
         <div className="relative object-cover w-full h-3/5">
           <div className="absolute inset-0 bg-gray-400 opacity-30 rounded-full" />
+
           <CardMedia
             component="img"
-            alt={name}
-            image={image}
-            title={name}
-            className={Object.entries(cardMediaStyle).map(([key, value]) => `${key}-${value}`).join(' ')}
+            src={image}
+            alt={camera.name}
+            className="object-cover w-3/5 h-full relative z-10"
           />
         </div>
         <CardContent>
           <Typography variant="h6" component="h3">
-            {name}
+            {camera.name}
           </Typography>
-          {/* Display other camera details */}
-          {renderDetail('Price', `$ ${price}`)}
-          {renderDetail('Type', cameraType)}
+          <Typography
+            variant="body2"
+            className="font-bold text-sm "
+            component="p"
+          >
+            From $
+            {' '}
+            {camera.daily_price}
+            {' '}
+            per day
+          </Typography>
+          <Link to={`/camera/${camera.id}`} className="mt-4">
+            <Button color="neutral" onClick={onClick} variant="soft">
+              {buttonLabel}
+            </Button>
+          </Link>
         </CardContent>
       </Card>
     </Grid>
@@ -64,7 +62,7 @@ CameraCard.propTypes = {
     name: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    cameraType: PropTypes.string.isRequired,
+    camera_type: PropTypes.string.isRequired,
   }).isRequired,
 };
 
