@@ -63,20 +63,25 @@ const CameraDetails = () => {
     );
   }
 
+  console.log(camera);
+
   return (
     <div className="flex justify-between w-full">
       <div style={{ flex: 1 }} className="">
-        <Carousel sx={{ width: '100%' }}>
-          {camera.camera_images.map((imageData) => (
-            <img
-              key={imageData.id}
-              src={imageData.image}
-              alt={`Camera ${imageData.id}`}
-              style={{ width: '100%', height: 'auto' }}
-            />
-          ))}
-        </Carousel>
+        {camera.images && camera.images.length > 0 && (
+          <Carousel sx={{ width: '100%' }}>
+            {camera.images.map((imageData) => (
+              <img
+                key={imageData.id}
+                src={imageData.url} // Assuming 'url' contains the image URL
+                alt={`Camera ${imageData.id}`}
+                style={{ width: '100%', height: 'auto' }}
+              />
+            ))}
+          </Carousel>
+        )}
       </div>
+
       <div style={{ flex: 1, marginLeft: '20px' }}>
         <Typography variant="h2" gutterBottom>
           {camera.name}

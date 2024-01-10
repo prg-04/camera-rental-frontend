@@ -2,12 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Card, CardContent, Typography, Grid, Button,
-} from '@mui/joy';
-import { CardMedia } from '@mui/material';
+} from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const CameraCard = ({ camera, buttonLabel, onClick }) => {
-  const { camera_images: [{ image } = {}] = [] } = camera;
+  const images = camera.images || [];
+
+  // Render images with URLs and base64 strings
+  const renderImages = () => images.slice(0, 1).map((image, index) => (
+    <img
+      key={index}
+      src={image.url}
+      alt={`Image ${index}`}
+      className="object-cover w-3/5 h-full relative z-10"
+    />
+  ));
 
   return (
     <Grid
@@ -23,13 +32,8 @@ const CameraCard = ({ camera, buttonLabel, onClick }) => {
       >
         <div className="relative object-cover w-full h-3/5">
           <div className="absolute inset-0 bg-gray-400 opacity-30 rounded-full" />
-
-          <CardMedia
-            component="img"
-            src={image}
-            alt={camera.name}
-            className="object-cover w-3/5 h-full relative z-10"
-          />
+          {/* Display images */}
+          {renderImages()}
         </div>
         <CardContent>
           <Typography variant="h6" component="h3">
@@ -37,11 +41,10 @@ const CameraCard = ({ camera, buttonLabel, onClick }) => {
           </Typography>
           <Typography
             variant="body2"
-            className="font-bold text-sm "
+            className="font-bold text-sm"
             component="p"
           >
             From $
-            {' '}
             {camera.daily_price}
             {' '}
             per day
@@ -60,12 +63,17 @@ const CameraCard = ({ camera, buttonLabel, onClick }) => {
 CameraCard.propTypes = {
   camera: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    camera_type: PropTypes.string.isRequired,
-    buttonLabel: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
+    images: PropTypes.arrayOf(
+      PropTypes.shape({
+        url: PropTypes.string.isRequired,
+        base64: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
+    daily_price: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
   }).isRequired,
+  buttonLabel: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default CameraCard;

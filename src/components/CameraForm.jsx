@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid } from '@mui/material';
-import Container from "@mui/material/Container";
+import Container from '@mui/material/Container';
 
 const CameraForm = () => {
   const [cameraName, setCameraName] = useState('');
@@ -10,10 +10,12 @@ const CameraForm = () => {
   const [twoWeekPrice, setTwoWeekPrice] = useState('');
   const [threeWeekPrice, setThreeWeekPrice] = useState('');
   const [fourWeekPrice, setFourWeekPrice] = useState('');
+  const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);
 
   const handleImageChange = (e) => {
     const selectedImages = Array.from(e.target.files);
+    console.log(e.target.files);
     setImages(selectedImages);
   };
 
@@ -21,19 +23,20 @@ const CameraForm = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append('name', cameraName);
-    formData.append('daily_price', dailyPrice);
-    formData.append('camera_type', cameraType);
-    formData.append('weekly_price', weeklyPrice);
-    formData.append('two_week_price', twoWeekPrice);
-    formData.append('three_week_price', threeWeekPrice);
-    formData.append('four_week_price', fourWeekPrice);
+    formData.append('camera[name]', cameraName);
+    formData.append('camera[daily_price]', dailyPrice);
+    formData.append('camera[camera_type]', cameraType);
+    formData.append('camera[weekly_price]', weeklyPrice);
+    formData.append('camera[two_week_price]', twoWeekPrice);
+    formData.append('camera[three_week_price]', threeWeekPrice);
+    formData.append('camera[four_week_price]', fourWeekPrice);
+    formData.append('camera[description]', description);
+    formData.append('camera[booked]', false);
 
     images.forEach((image, index) => {
-      formData.append(`images[${index}]`, image);
+      formData.append('camera[images][]', image);
     });
 
-    console.log(formData);
     // Perform the POST request to your backend API
     try {
       const response = await fetch('http://localhost:4000/api/v1/cameras', {
@@ -104,6 +107,15 @@ const CameraForm = () => {
               label="Four Weeks Price"
               value={fourWeekPrice}
               onChange={(e) => setFourWeekPrice(e.target.value)}
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              type="text"
+              label="Camera Description"
+              value={description}
+              multiline
+              onChange={(e) => setDescription(e.target.value)}
             />
           </Grid>
           <Grid item>

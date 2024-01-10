@@ -59,7 +59,7 @@ const Cameras = () => {
   const chunkedCameras = chunkArray(cameras, 3);
 
   return (
-    <Carousel animation="slide" className="w-full h-full">
+    <Carousel animation="none" className="w-full h-full">
       {chunkedCameras.map((chunk) => (
         <div key={chunk.camera} className="flex gap-3 border-none">
           {chunk.map((camera) => (
