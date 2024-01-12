@@ -4,14 +4,14 @@ import Carousel from 'react-material-ui-carousel';
 import { useNavigate } from 'react-router-dom';
 import CameraCard from './CameraCard';
 
-const Cameras = () => {
+const MyRentalCameras = () => {
   const [cameras, setCameras] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/v1/cameras')
+    fetch('http://localhost:4000/api/v1/bookings')
       .then((response) => response.json())
       .then((data) => {
         setCameras(data);
@@ -59,14 +59,14 @@ const Cameras = () => {
   const chunkedCameras = chunkArray(cameras, 3);
 
   return (
-    <Carousel animation="none" className="w-full h-full">
+    <Carousel animation="slide" className="w-full h-full">
       {chunkedCameras.map((chunk) => (
         <div key={chunk.camera} className="flex gap-3 border-none">
           {chunk.map((camera) => (
             <CameraCard
               key={camera.id}
               camera={camera}
-              buttonLabel="Hire now"
+              buttonLabel="See details"
               onClick={() => navigate(`/camera/${camera.id}`)}
             />
           ))}
@@ -75,5 +75,4 @@ const Cameras = () => {
     </Carousel>
   );
 };
-
-export default Cameras;
+export default MyRentalCameras;

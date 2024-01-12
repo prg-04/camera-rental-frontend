@@ -10,7 +10,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, setToken } from '../redux/userAuth/authSlice';
 
-const protectedPages = ['My Rental Cameras', 'Book camera'];
+const protectedPages = ['My Rental Cameras', 'Add camera'];
 
 function Sidebar() {
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ function Sidebar() {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        width: '300px',
+        width: '200px',
         height: '100vh',
         padding: '3rem',
         backgroundColor: '#fff',

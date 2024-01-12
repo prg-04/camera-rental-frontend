@@ -10,6 +10,8 @@ import CameraDetails from './components/CameraDetails';
 import SignUp from './components/SignUp';
 import Sidebar from './components/Sidebar';
 import { setToken } from './redux/userAuth/authSlice';
+import MyRentalCameras from './components/MyRentalCameras';
+import CameraForm from './components/CameraForm';
 
 function App() {
   const dispatch = useDispatch();
@@ -29,7 +31,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/cameras" element={<CameraDetails />} />
+        <Route path="/camera/:id" element={<CameraDetails />} />
+        <Route path="/add-camera" element={<CameraForm />} />
+        <Route path="/my-rental-cameras" element={<MyRentalCameras />} />
         <Route path="/sign-up" element={<SignUp />} />
       </Routes>
     </div>
