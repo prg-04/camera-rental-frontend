@@ -33,7 +33,7 @@ const CameraForm = () => {
     formData.append('camera[description]', description);
     formData.append('camera[booked]', false);
 
-    images.forEach((image, index) => {
+    images.forEach((image) => {
       formData.append('camera[images][]', image);
     });
 
