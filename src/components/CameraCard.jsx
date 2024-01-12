@@ -5,6 +5,7 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
+//CameraCard function
 const CameraCard = ({ camera, buttonLabel, onClick }) => {
   const images = camera.images || [];
 
